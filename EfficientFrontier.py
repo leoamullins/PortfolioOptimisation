@@ -25,15 +25,6 @@ class ef(PortHelp):
         else:
             return returns.mean() * days
     
-    def covariancematrix(self, prices, days = 252):
-        if not isinstance(prices, pd.DataFrame):
-            raise TypeError('Format prices as a pd.DataFrame')
-        
-        returns = prices.pct_change(fill_method = None).dropna(how = 'all')
-        covariance = returns.cov() * days
-
-        return covariance
-    
     def minimumvariance(self, prices, target_return):
         if not isinstance(prices, (pd.Series, pd.DataFrame)):
             raise TypeError("Prices should be a pd.DataFrame")
