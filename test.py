@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 from EfficientFrontier import ef
 from BlackLitterman import blacklitterman, implied_prior_returns, implied_risk_aversion
+import pypfopt as pf
+
 
 mcaps = {
     "GOOG": 927e9,
@@ -35,8 +37,6 @@ prices = yf.download(tickers, start = '2015-01-01', auto_adjust=False)['Adj Clos
 ef = ef(prices)
 val, data = ef.max_sharpe(prices)
 
-print(data)
-
 spy_data = yf.download('SPY', start = '2015-01-01', auto_adjust=False)['Adj Close']
 
 
@@ -44,7 +44,7 @@ spy_data = yf.download('SPY', start = '2015-01-01', auto_adjust=False)['Adj Clos
 cov = ef.covariancematrix(prices)
 delta = implied_risk_aversion(spy_data)
 pi = implied_prior_returns(mcaps, delta, cov)
-tau = 0.05
+tau = 0.01
 
 # 1. SBUX will drop by 20%
 # 2. GOOG outperforms FB by 10%
@@ -61,9 +61,4 @@ P = np.array(
 )
 
 weights = bl.blacklitterman_port(delta, Q, P)
-
 ret = bl.postExpectedReturns(Q, P)
-
-print(weights)
-
-

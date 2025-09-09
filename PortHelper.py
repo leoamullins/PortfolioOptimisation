@@ -9,7 +9,7 @@ class PortHelp():
         self.tickers = prices.columns
 
     def weights_clean(self, weights, rounddp = 6):
-        weightsclean = np.where(weights < 1e-6, 0, weights)
+        weightsclean = np.where(abs(weights) < 1e-6, 0, weights)
 
         rounded = weightsclean.round(rounddp)
         return pd.Series(rounded, self.tickers)
