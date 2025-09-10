@@ -125,7 +125,7 @@ class ef(PortHelp):
         def obj(w):
             w = w[:n] # Not including kappa in the Variance calculation.
             return w.T @ cov_matrix @ w
-        
+
         constraints = (
             {'type': 'eq', 'fun': lambda w: (expret - r_f).T @ w[:n] - 1}, 
             {'type': 'eq', 'fun': lambda w: np.sum(w[:n]) - w[-1]}
@@ -133,7 +133,7 @@ class ef(PortHelp):
 
         lb = [0] * n + [1e-6] # Using 1e-6 as a minimum kappa value, not including shorting.
         ub = [kmax] * n + [kmax]
-        
+
         bounds = Bounds(lb=lb, ub=ub)
 
         wopt = minimize(obj, w0, args= (), method = 'SLSQP', bounds = bounds, constraints=constraints)
@@ -143,7 +143,7 @@ class ef(PortHelp):
         cleaned = self.weights_clean(invertedw)
         # Calculating Sharpe ratio
         value = (expret.T @ invertedw - r_f) / np.sqrt(invertedw.T @ cov_matrix @ invertedw)
-        
+
         return value, pd.Series(cleaned, self.tickers)
     
     def plotting(self, prices, maxsharpe = False):
