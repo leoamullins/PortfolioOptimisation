@@ -50,16 +50,4 @@ For a more detailed derivation of the Black–Litterman routine, refer to the no
 
 ## Tests
 
-The repository does not currently contain automated tests. When making changes,
-please run your own smoke tests to ensure the optimisation routines work as expected
-with your data.
-requirements.txt
-New
-+5
--0
-
-numpy>=1.23
-pandas>=1.5
-scipy>=1.10
-matplotlib>=3.7
-yfinance>=0.2
+I have now added a backtesting framework that works with a rolling window and a portfolio rebalance frequency. This can be used to to test and prove results given the historic data.
